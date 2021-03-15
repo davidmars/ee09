@@ -19,7 +19,6 @@
     "@mdi/font": "^5.8.55",
     "axios": "^0.21.0",
     "browser-md5-file": "^1.1.1",
-    "common-fonts": "git+https://github.com/davidmars/common-fonts.git",
     "core-js": "^3.6.5",
     "date-fns": "^2.17.0",
     "electron-store": "^7.0.2",
