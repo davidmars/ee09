@@ -5,11 +5,6 @@
   "description": "Un couteau suisse pour faire du Javascript",
   "private": true,
   "scripts": {
-    "electron:serve": "vue-cli-service electron:serve",
-    "electron:build": "vue-cli-service electron:build",
-    "publish": "vue-cli-service electron:build -p always",
-    "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
@@ -48,8 +43,6 @@
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
-    "electron": "^9.0.0",
-    "electron-devtools-installer": "^3.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "event-emitter-es6": "^1.1.5",
