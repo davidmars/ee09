@@ -1,5 +1,5 @@
 import JsonDb from "./JsonDb";
-import EE09task from "@/ee09/EE09task";
+import EE09task from "../EE09task";
 const { JSONStorage } = require('node-localstorage');
 const fs = require("fs"); // Or `import fs from "fs";` with ESM
 const {dialog} = require('electron').remote;

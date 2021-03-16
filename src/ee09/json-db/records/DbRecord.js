@@ -7,8 +7,6 @@ export default class DbRecord{
         this.dateCreated=new Date().toISOString();
         this.dateModified=new Date().toISOString();
 
-
-
     }
 
 

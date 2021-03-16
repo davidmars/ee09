@@ -1,5 +1,5 @@
-import DbLanguage from "@/ee09/json-db/settings/DbLanguage";
-import DbModelType from "@/ee09/json-db/settings/DbModelType";
+import DbLanguage from "./DbLanguage";
+import DbModelType from "./DbModelType";
 
 export default class DbSettings{
     /**

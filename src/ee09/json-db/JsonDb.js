@@ -1,12 +1,12 @@
 
-import DbSettings from "@/ee09/json-db/settings/DbSettings";
-import DbRecordFile from "@/ee09/json-db/records/DbRecordFile";
-import EE09fileUtilsBrowser from "@/ee09/utils/EE09fileUtilsBrowser";
-import EE09task from "@/ee09/EE09task";
-import EE09dateUtils from "@/ee09/utils/EE09dateUtils";
-import EE09urlAnalyzer from "@/ee09/utils/EE09urlAnalyzer";
-import EE09obj from "@/ee09/utils/EE09obj";
-import EE09string from "@/ee09/utils/EE09string";
+import DbSettings from "./settings/DbSettings";
+import DbRecordFile from "./records/DbRecordFile";
+import EE09fileUtilsBrowser from "../utils/EE09fileUtilsBrowser";
+import EE09task from "../EE09task";
+import EE09dateUtils from "../utils/EE09dateUtils";
+import EE09urlAnalyzer from "../utils/EE09urlAnalyzer";
+import EE09obj from "../utils/EE09obj";
+import EE09string from "../utils/EE09string";
 const fileUtils=new EE09fileUtilsBrowser();
 const EventEmitter = require('event-emitter-es6');
 

@@ -1,7 +1,7 @@
 /**
  * Désigne un type de record
  */
-import DbRecord from "@/ee09/json-db/records/DbRecord";
+import DbRecord from "../records/DbRecord";
 
 export default class DbModelType{
     /**

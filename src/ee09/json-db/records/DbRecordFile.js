@@ -1,4 +1,4 @@
-import DbRecord from "@/ee09/json-db/records/DbRecord";
+import DbRecord from "./DbRecord";
 export default class DbRecordFile extends DbRecord{
     constructor() {
         super();

@@ -1,5 +1,5 @@
 import BMF from 'browser-md5-file';
-import EE09task from "@/ee09/EE09task";
+import EE09task from "../EE09task";
 
 const kebabCase=require('lodash/kebabCase');
 const filesize=require('filesize');
