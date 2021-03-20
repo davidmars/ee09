@@ -1,36 +1,57 @@
 import JsonDb from "./JsonDb";
 import EE09task from "../EE09task";
 const { JSONStorage } = require('node-localstorage');
-const fs = require("fs"); // Or `import fs from "fs";` with ESM
+const fs = require("fs");
 const {dialog} = require('electron').remote;
 const {app} = require('electron').remote;
 
 
 export default class JsonDbNode extends JsonDb{
 
-    constructor(adapter) {
-        super(adapter);
-        this._rootPath=localStorage.getItem("rootPath");
+    constructor(name) {
+        super(name);
+        this.JSON_FILE_NAME="ee09.records.json"
         let rootPathOk=false;
-        if(this._rootPath){
-            if (fs.existsSync(this._rootPath)) {
+        if(this.rootPath){
+            if (fs.existsSync(this.rootPath)) {
                 rootPathOk=true;
             }
         }
         if(!rootPathOk){
-            this._rootPath=app.getPath("documents")+"/jsonDb";
-            this.rootPath=this._rootPath;
+            this._createDefaultDb();
         }
+
+    }
+
+    start(){
+        this._mountJsonStorage();
+    }
+
+    /**
+     * Si aucune BDD n'a été définie auparavant, en crée une par défaut dans "Mes Documents"
+     * @private
+     */
+    _createDefaultDb(){
+        this.rootPath=app.getPath("documents")+"/"+this.name;
         if(!fs.existsSync(this.rootPath)){
             fs.mkdirSync(this.rootPath);
         }
+    }
 
+    _mountJsonStorage(){
+        this.readOnly=true;
+        //reset tout
+        this.records=[];
         this._jsonStorage=new JSONStorage(this._rootPath);
-
-        this._jsonRecords=this._jsonStorage.getItem("records.json");
+        this._jsonRecords=this._jsonStorage.getItem(this.JSON_FILE_NAME);
         if(!this._jsonRecords){
+            this.records=[];
             this._jsonRecords=[];
+            this.readOnly=false;
             this.push();
+        }else{
+            this.pull();
+            this.readOnly=false;
         }
     }
 
@@ -38,7 +59,13 @@ export default class JsonDbNode extends JsonDb{
      * Enregistre la BDD sur le disque dur
      */
     push(){
-        this._jsonStorage.setItem("records.json",this.records);
+        if(this.readOnly){
+           console.warn("DB en lecture seule");
+           return;
+        }
+        //enregistre
+        this._jsonStorage.setItem(this.JSON_FILE_NAME,this.records);
+        //récupère les datas from scratch
         this.pull();
         this.emit("push");
     }
@@ -46,17 +73,25 @@ export default class JsonDbNode extends JsonDb{
      * Lit la BDD depuis le disque dur
      */
     pull() {
-        this._jsonRecords=this._jsonStorage.getItem("records.json");
+        this._jsonRecords=this._jsonStorage.getItem(this.JSON_FILE_NAME);
         this._mount(this._jsonRecords);
     }
 
     get rootPath() {
+        if(!this._rootPath){
+            this._rootPath=localStorage.getItem(`${this.name}-rootPath`);
+        }
         return this._rootPath;
     }
 
+    /**
+     * Chemin vers le répertoire qui contient la BDD
+     * Est enregistré en local storage
+     * @param {String} value
+     */
     set rootPath(value) {
         this._rootPath=value;
-        localStorage.setItem("rootPath",value);
+        localStorage.setItem(`${this.name}-rootPath`,value);
     }
 
     /**
@@ -64,12 +99,19 @@ export default class JsonDbNode extends JsonDb{
      */
     uiSelectRootPath(){
         let me=this;
-        dialog.showOpenDialog( {
+        let dialogOptions={
             title:"Où est stockée votre base de données?",
             properties: ['openDirectory']
-        }).then(result => {
-            if(result.filePaths.length){
-                me.rootPath=result.filePaths[0]
+        };
+        if(this.rootPath){
+            dialogOptions.defaultPath=this.rootPath;
+        }
+        dialog.showOpenDialog( dialogOptions)
+            .then(result => {
+                if(result.filePaths.length){
+                me.rootPath=result.filePaths[0];
+                me._mountJsonStorage();
+                //me.pull();
             }
         }).catch(err => {
             console.error(err)
