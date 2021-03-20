@@ -31,10 +31,10 @@
     "vue-fragment": "^1.5.1",
     "vue-router": "^3.4.9",
     "vuetify": "^2.2.11",
-    "event-emitter-es6": "^1.1.5"
+    "event-emitter-es6": "^1.1.5",
+    "gently-copy": "^3.2.0"
   },
   "devDependencies": {
-    "gently-copy": "^3.2.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
