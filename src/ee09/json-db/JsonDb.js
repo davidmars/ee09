@@ -12,9 +12,17 @@ const EventEmitter = require('event-emitter-es6');
 
 export default class JsonDb extends EventEmitter{
 
-
-    constructor() {
+    /**
+     *
+     * @param {String} name Nom de la base de données
+     */
+    constructor(name) {
         super();
+        /**
+         * Nom de la base de données.
+         * @type {String}
+         */
+        this.name=name;
         let me=this;
         /**
          *
@@ -39,15 +47,19 @@ export default class JsonDb extends EventEmitter{
             obj:new EE09obj(),
             string:new EE09string(),
         }
+        /**
+         * Quand définit sur true les enregistrements en BDD sont impossibles
+         * @type {boolean}
+         */
+        this.readOnly=false;
 
         setInterval(function(){
-            if(me._jsonRecords){
-                if(JSON.stringify(me.records) !== JSON.stringify(me._jsonRecords)){
-                    console.log("db change",typeof me._jsonRecords);
+            if (me._jsonRecords) {
+                if (JSON.stringify(me.records) !== JSON.stringify(me._jsonRecords)) {
+                    console.log("db change", typeof me._jsonRecords);
                     me.push();
                 }
             }
-
         },2000);
 
     }
@@ -63,7 +75,7 @@ export default class JsonDb extends EventEmitter{
     }
 
     /**
-     * A appeler une fois tous les settings ok
+     * A appeler une fois tous les settings sont ok
      */
     start(){
         this._mount(this._jsonRecords);

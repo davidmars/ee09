@@ -7,7 +7,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "postinstall": "node ./post-install.js"
   },
   "main": "background.js",
   "dependencies": {
@@ -39,6 +40,7 @@
     "vuex": "^3.6.0"
   },
   "devDependencies": {
+    "gently-copy": "^3.2.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
