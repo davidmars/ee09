@@ -50,7 +50,7 @@ Vue.prototype.$db = Vue.observable(window.$db);
 window.$dbUi=new DbUiElectron();
 
 //donner à l'ui des infos sur l'app
-window.$dbUi.mainAppPackage=require("../package.json");
+window.$dbUi.mainAppPackage=require("../../package.json");
 /**
  * Rend l'admin disponible et réactif dans tous les composants vue
  * @type {DbUiElectron}
