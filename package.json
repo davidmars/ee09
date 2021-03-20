@@ -2,7 +2,7 @@
   "name": "ee09",
   "version": "0.0.1",
   "author": "David Marsalone / Pixel Vinaigrette",
-  "description": "Un couteau suisse pour faire du Javascript",
+  "description": "Une boite à outils pour faire du Javascript dans un navigateur, avec ou sans Vue, avec ou sans Electron",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -10,7 +10,6 @@
     "lint": "vue-cli-service lint",
     "postinstall": "node ./post-install.js"
   },
-  "main": "background.js",
   "dependencies": {
     "@mdi/font": "^5.8.55",
     "axios": "^0.21.0",
@@ -18,13 +17,11 @@
     "core-js": "^3.6.5",
     "date-fns": "^2.17.0",
     "electron-store": "^7.0.2",
-    "electron-updater": "^4.3.5",
     "filesize": "^6.1.0",
     "get-video-id": "^3.1.9",
     "less": "^3.12.2",
     "less-loader": "^7.1.0",
     "lodash": "^4.17.20",
-    "lowdb": "^1.0.0",
     "node-localstorage": "^2.1.6",
     "plyr": "^3.6.4",
     "raw-loader": "^4.0.2",
@@ -37,7 +34,8 @@
     "vue-fragment": "^1.5.1",
     "vue-router": "^3.4.9",
     "vuetify": "^2.2.11",
-    "vuex": "^3.6.0"
+    "vuex": "^3.6.0",
+    "event-emitter-es6": "^1.1.5"
   },
   "devDependencies": {
     "gently-copy": "^3.2.0",
@@ -47,7 +45,7 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "event-emitter-es6": "^1.1.5",
+
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
     "vue-cli-plugin-electron-builder": "~2.0.0-rc.5",
