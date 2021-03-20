@@ -62,7 +62,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../../../node_modules/plyr/dist/plyr.css";
+@import "~plyr/dist/plyr.css";
 .video-plyr{
   position: relative;
   min-width: 20px;
