@@ -4,7 +4,9 @@
   "author": "David Marsalone / Pixel Vinaigrette",
   "description": "Une boite à outils pour faire du Javascript dans un navigateur, avec ou sans Vue, avec ou sans Electron",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "postinstall": "node ./post-install.js"
+  },
   "dependencies": {
     "@mdi/font": "^5.8.55",
     "axios": "^0.21.0",
