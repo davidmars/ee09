@@ -19,4 +19,16 @@ export default class DbLanguage{
          */
         this.flagImg=flagImg;
     }
+
+    /**
+     * Renvoie true si la langue est la langue courrante
+     * @return {boolean}
+     */
+    get isCurrent(){
+        if(!window.$db.settings.currentLanguage){
+            return false;
+        }
+        return window.$db.settings.currentLanguage.code === this.code;
+    }
+
 }

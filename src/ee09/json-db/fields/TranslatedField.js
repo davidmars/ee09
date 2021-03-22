@@ -16,4 +16,12 @@ export default class TranslatedField{
     getValue(langCode){
         return this[langCode];
     }
+
+    /**
+     * Renvoie la valeur dans la langue courrante
+     * @return {String}
+     */
+    toString() {
+        return this.getValue(window.$db.settings.currentLanguage.code);
+    }
 }

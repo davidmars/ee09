@@ -1,12 +1,15 @@
 import DbLanguage from "./DbLanguage";
 import DbModelType from "./DbModelType";
+const EventEmitter = require('event-emitter-es6');
 
-export default class DbSettings{
+export default class DbSettings extends EventEmitter{
+
     /**
      *
      * @param {JsonDb} db
      */
     constructor(db) {
+        super();
         this.db=db;
         /**
          * Les langues prises en charge
@@ -14,10 +17,35 @@ export default class DbSettings{
          */
         this.languages=[];
         /**
+         * La langue en cours
+         * @type {DbLanguage}
+         */
+        this._currentLanguage=null;
+        /**
          * Les types de record pris en charge
          * @type {DbModelType[]}
          */
         this.modelsTypes=[];
+    }
+
+    get currentLanguage() {
+        return this._currentLanguage;
+    }
+    set currentLanguage(value) {
+        let lng=null;
+        let changed=false;
+        if(typeof value === "string"){
+            lng = this.getLanguage(value);
+        }else{
+            lng=value;
+        }
+        if(JSON.stringify(lng) !== JSON.stringify(this._currentLanguage)){
+            changed=true;
+        }
+        this._currentLanguage = lng;
+        if(changed){
+            this.emit("change-current-language")
+        }
     }
 
     /**
