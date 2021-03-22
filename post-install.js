@@ -10,7 +10,10 @@
 
 const gentlyCopy = require('gently-copy');
 
-let filesToCopy = ['_user-src/']
+let filesToCopy = [
+    '_user-src/json-db-ui',
+    '_user-src/jsonDb.config.js'
+]
 
 // User's local directory
 let userPath = process.env.INIT_CWD
