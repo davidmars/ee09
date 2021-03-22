@@ -7,6 +7,7 @@
                 :hint="field.getErrors().join(' ')"
                 :placeholder="field.getErrors().join(' ')"
                 :prepend-inner-icon="providerIcon"
+                :hide-details="field.getErrors().length===0"
   >
     <template v-slot:append>
         <record-create-btn
