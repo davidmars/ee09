@@ -10,12 +10,14 @@ export default class DbRecordFile extends DbRecord{
     }
 
     /**
-     * Renvoie le chemin permettant de charger le fichier
+     * Renvoie le chemin permettant de charger le fichier (ou une chaine vide)
      * @return {string}
      */
     get href(){
-        let p=window.$db.rootPath+"/fs/"+this.path;
-        //console.log("p",p);
+        let p="";
+        if(this.path){
+            p=window.$db.rootPath+"/fs/"+this.path;
+        }
         return p;
     }
 

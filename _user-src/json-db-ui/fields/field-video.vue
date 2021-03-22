@@ -1,5 +1,5 @@
 <template>
-<div class="field-video">
+<div class="field-video mb-6">
   <field-label>{{label}}</field-label>
   <v-text-field filled
                 v-model="field.userInput"

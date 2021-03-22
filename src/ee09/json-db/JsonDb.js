@@ -237,6 +237,7 @@ export default class JsonDb extends EventEmitter{
     getListType(type){
         return this.records.filter(item=>item.type===type);
     }
+
     /**
      * Cherche un record à partir d'une dbString
      * @param {String} dbUidString Une chaine du type db:type-id
@@ -250,6 +251,14 @@ export default class JsonDb extends EventEmitter{
             return this.getByUid(uid,type)
         }
         return null;
+    }
+
+    /**
+     * Renvoie les records qui sont des fichiers image
+     * @return {DbRecordFile[]}
+     */
+    get recordListImages(){
+        return this.records.filter(item=>item.type==='file' && item.isImage);
     }
 
 
