@@ -15,7 +15,7 @@ export default class VideoField{
          */
         this.provider="";
         /**
-         * Identifiant de la vidéo qui va de pair avec privider
+         * Identifiant de la vidéo qui va de pair avec provider
          * @type {string}
          */
         this.videoId="";
