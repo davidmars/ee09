@@ -38,6 +38,7 @@ export default {
   },
   methods:{
     buildPlayer(){
+      let me=this;
       let o={};
       if(!this.player){
         o= {...this.options};
@@ -50,6 +51,14 @@ export default {
       if(o.muted){
         this.player.muted=o.muted;
       }
+      this.player.on("timeupdate",function(event){
+        //console.log("timeupdate",event);
+        me.$emit("timeupdate",event)
+      });
+      this.player.on("ended",function(event){
+        //console.log("ended",event);
+        me.$emit("ended",event)
+      })
     }
   },
   watch:{
