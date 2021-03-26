@@ -7,10 +7,7 @@
         <v-toolbar-title>Administration</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="align-center">
-          <v-btn text @click="$db.push()">
-            Enregistrer
-          </v-btn>
-          <v-btn @click="$dbUi.visible=false">
+          <v-btn text @click="$dbUi.visible=false">
           <v-icon >mdi-close</v-icon>
           </v-btn>
         </v-toolbar-items>

@@ -15,9 +15,11 @@ export default {
   components: {RecordModelType},
   computed:{
     modelTypes(){
-      return this.$db.settings.modelsTypes.concat().sort(function (a,b){
-        return a.order > b.order ? 1 : -1;
+      let r=this.$db.settings.modelsTypes.concat().sort(function (a,b){
+        return a.uiSettings.order > b.uiSettings.order ? 1 : -1;
       })
+      r=r.filter(r=>r.uiSettings.visible)
+      return r;
     }
   }
 }

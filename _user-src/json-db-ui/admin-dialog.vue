@@ -126,6 +126,7 @@ export default {
       min-height: calc( 100vh - var(--top-h));
       padding-left: var(--left-w);
       top: var(--top-h);
+      margin-top: -1px;
       //width: calc(100% - 300px);
     }
 

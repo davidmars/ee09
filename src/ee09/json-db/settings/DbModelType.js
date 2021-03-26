@@ -50,10 +50,22 @@ export default class DbModelType{
         this.editComponent=this.type+"-edit";
 
         /**
-         * Orde d'apparition dans la liste de type de modèles
-         * @type {number}
+         * Paramètres d'affichage
+         * @type {{visible: boolean, order: number}}
          */
-        this.order=10;
+        this.uiSettings={
+            /**
+             * Permet de savoir si il faut afficher le record ou pas
+             * @type {boolean}
+             */
+            visible:true,
+            /**
+             * Orde d'apparition dans la liste de type de modèles
+             * @type {number}
+             */
+            order:10
+        }
+
     }
 
     /**
