@@ -113,11 +113,13 @@ export default class JsonDb extends EventEmitter{
      * @return {EE09task}
      */
     getFileRecord(file){
+        console.log("getFileRecord",file)
         let me=this;
         let task=new EE09task();
         task.status="Analyse le fichier";
         let md5Task=fileUtils.md5(file);
         md5Task.once("RESULT", function(md5){
+            console.log("md5 success",md5)
             task.status="Recherche dans la base de données";
             let existing=me.findOne('file','md5',md5);
             if(existing){
@@ -141,10 +143,12 @@ export default class JsonDb extends EventEmitter{
             }
         })
         md5Task.on("PROGRESS", function(percent){
+            console.log("md5 progress",percent)
             task.status="Analyse";
             task.percent=percent;
         })
         md5Task.on("ERROR", function(err){
+            console.log("md5 ERROR",err)
             task.addError(err);
         })
         return task;
