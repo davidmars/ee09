@@ -1,5 +1,6 @@
 <template>
   <v-dialog
+      light
       class="admin-dialog"
       v-model="$dbUi.visible"
       fullscreen
