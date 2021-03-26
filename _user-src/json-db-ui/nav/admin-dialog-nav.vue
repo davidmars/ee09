@@ -25,7 +25,7 @@
       <div class="bottom">
         <v-divider></v-divider>
         <v-list dense color="transparent" shaped>
-          <v-list-item to="settings" @click="$dbUi.displaySettings()" :v-model="true">
+          <v-list-item @click="$dbUi.displaySettings()" :v-model="true">
             <v-list-item-content>
               <v-list-item-title>
                 Paramètres

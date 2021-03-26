@@ -1,5 +1,5 @@
 <template>
-  <v-list-item :to="m.type" @click="$dbUi.displayRecords(m.type)">
+  <v-list-item @click="$dbUi.displayRecords(m.type)">
     <v-badge  :content="$db.getListType(m.type).length"
               color="pink accent-4"
               top offset-x="25" offset-y="25"
