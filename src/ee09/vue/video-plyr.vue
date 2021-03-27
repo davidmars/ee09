@@ -45,7 +45,7 @@ export default {
         o.loadSprite=false;
         o.iconUrl=require('plyr/dist/plyr.svg');
         this.player = new Plyr("#"+this.htmlId,o);
-        console.log("plyr options",o)
+        //console.log("plyr options",o)
       }
       this.player.source=this.source;
       if(o.muted){
