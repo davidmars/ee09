@@ -1,5 +1,6 @@
 import JsonDb from "./JsonDb";
 import EE09task from "../EE09task";
+import EE09fileUtilsNode from "../utils/EE09fileUtilsNode";
 const { JSONStorage } = require('node-localstorage');
 const fs = require("fs");
 const {dialog} = require('electron').remote;
@@ -20,6 +21,7 @@ export default class JsonDbNode extends JsonDb{
         if(!rootPathOk){
             this._createDefaultDb();
         }
+        this.utils.fileNode=new EE09fileUtilsNode();
 
     }
 
