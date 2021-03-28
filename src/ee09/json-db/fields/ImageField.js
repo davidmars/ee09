@@ -1,5 +1,7 @@
 import RecordField from "./RecordField";
 import TranslatedField from "./TranslatedField";
+//import ImageFactoryUrl from "../images/ImageFactoryUrl";
+import ImageFactoryUrlNode from "../images/ImageFactoryUrlNode";
 
 export default class ImageField extends RecordField{
     constructor() {
@@ -37,6 +39,15 @@ export default class ImageField extends RecordField{
             return r.href;
         }
         return "";
+    }
+
+    /**
+     * Permet d'obtenir une image recadrée
+     * @return {ImageFactoryUrlNode}
+     */
+    resize(){
+        //TODO web ici il faudra probablement insérer un appel à ImageFactory normal
+        return new ImageFactoryUrlNode(this.record.hrefLocal);
     }
 
 }
