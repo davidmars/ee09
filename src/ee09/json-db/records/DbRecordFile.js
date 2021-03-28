@@ -1,4 +1,5 @@
 import DbRecord from "./DbRecord";
+import ImageFactoryUrlNode from "../images/ImageFactoryUrlNode";
 export default class DbRecordFile extends DbRecord{
     constructor() {
         super();
@@ -67,7 +68,8 @@ export default class DbRecordFile extends DbRecord{
      */
     get adminThumb(){
         if(this.isImage){
-            return this.href;
+            //TODO WEB gérer version alternative
+            return new ImageFactoryUrlNode(this.hrefLocal).inside(200,200).jpg().toString();
         }
         return null;
     }
