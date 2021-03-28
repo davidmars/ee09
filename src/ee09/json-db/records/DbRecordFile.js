@@ -20,6 +20,14 @@ export default class DbRecordFile extends DbRecord{
         }
         return p;
     }
+    /**
+     * Renvoie le chemin permettant de charger le fichier en local
+     * @return {string}
+     */
+    get hrefLocal(){
+        //TODO web ici il faudra probablement insérer une routine différente
+       return this.href;
+    }
 
     /**
      * Renvoie true si le fichier est une image
