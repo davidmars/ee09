@@ -11,7 +11,7 @@ const slugify = require('slugify')
 export default class EE09fileUtilsBrowser {
 
     constructor() {
-        this._md5_busy=false;
+        this._md5_busy=0;
     }
 
     /**
@@ -37,18 +37,21 @@ export default class EE09fileUtilsBrowser {
      */
     _md5Perform(file,task){
         let me=this;
-        if(!me._md5_busy){
-            me._md5_busy=true;
+        console.log("_md5Perform","busy",me._md5_busy)
+        //TODO il peut y avoir une erreur sile byte array est null (fichier google drive par exemple)
+        if(me._md5_busy<5){ //5 md5 en simultané possibles
+            me._md5_busy++;
             let encoder=new BMF();
             encoder.md5(
                 file,
                 (err, md5) => {
                     if(md5){
-                        me._md5_busy=false;
+                        me._md5_busy--;
                         file.md5=md5;
                         task.result=md5;
                     }else if(err){
-                        me._md5_busy=false;
+                        console.log("md5 error",err)
+                        me._md5_busy--;
                         task.addError(err);
                     }
                 },
