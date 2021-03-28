@@ -179,5 +179,15 @@ export default class EE09fileUtilsBrowser {
         return slugify(string);
     }
 
+    /**
+     * Renvoie path ou tous les antislashes on été remplacés par des slashes normaux
+     * @param {string} path
+     * @return {*}
+     */
+    regularSlashes(path){
+        return path.replace(/\\/g, "/");
+    }
+
+
 
 }
