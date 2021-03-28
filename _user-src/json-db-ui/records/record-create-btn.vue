@@ -5,12 +5,19 @@
            :small="small"
            :xLarge="xLarge"
            :xSmall="xSmall"
-           :color="color" :dark="dark"
+           :color="colorSmart.color" :dark="colorSmart.dark" :light="colorSmart.light"
            :fab="fab"
            @click.prevent="btnClick($event)"
     >
       <v-icon :left="!onlyIcon">{{icon}}</v-icon>
-      <span v-if="text">{{text}}</span>
+      <span v-if="text">{{text}} {{textStatus}}</span>
+
+      <v-progress-circular
+          v-if="schema.isFile && status === 'md5' "
+          v-model="progress"
+          :indeterminate="progress === null"
+          color="white"
+          class="ml-2" size="16" width="8"/>
       <input
           v-if="schema.isFile && displayFileInput"
           type="file" :multiple="multipleUploads" :accept="fileAccept"
@@ -35,10 +42,12 @@ export default {
     recordType: {type:String},
     color: {type:String},
     multipleUploads: {type:Boolean},
-    fileAccept:{type:String,default: "*"}
+    fileAccept:{type:String,default: "*"},
   },
   data: () => ({
     displayFileInput:true,
+    progress:undefined,
+    status:undefined
   }),
   computed:{
     /**
@@ -63,6 +72,26 @@ export default {
     },
     onlyIcon(){
       return this.text==='';
+    },
+    textStatus(){
+      if(this.status==="md5"){
+        return `Analyse ${Math.floor(this.progress)}%`
+      }
+      return "";
+    },
+    colorSmart(){
+      if(this.status==="md5"){
+        return {
+          color:'orange',
+          dark:true,
+          light:false
+        }
+      }
+      return {
+        color:this.color,
+        dark:false,
+        light:true
+      }
     }
 
 
@@ -84,13 +113,36 @@ export default {
      * @param event
      */
     uploadInputChange(event){
-      this.$emit('add-record-file',event);
-      //Reset le file input
       let me=this;
+      //Reset le file input
       this.displayFileInput=false;
       setTimeout(function(){
         me.displayFileInput=true;
       },100);
+
+      for(let f of event.target.files){
+        let task=this.$db.getFileRecord(f);
+        task.on("PROGRESS",function(){
+          me.progress=task.percent;
+          me.status="md5";
+        })
+        task.on("RESULT",
+            /**
+             *
+             * @param {DbRecordFile} result
+             */
+            function(result){
+
+              console.log("result",result)
+              me.progress=null;
+              me.status=null;
+              me.$emit('set-record-file',event,result);
+            }
+        );
+      }
+
+
+
     },
     stopTheEvent(event){
       event.stopPropagation();

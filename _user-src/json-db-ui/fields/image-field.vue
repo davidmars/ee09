@@ -18,7 +18,9 @@
             text="fichier"
             record-type="file"
             file-accept="image/*"
-            @add-record-file="addFile($event)"
+            @set-record-file="setFile"
+            :progress="progress"
+            :status="status"
         />
       </div>
 
@@ -73,23 +75,20 @@ export default {
   },
   data(){
     return{
+      progress:0,
+      status:''
     }
   },
   methods:{
-    addFile(e){
+    /**
+     *
+     * @param {event} e
+     * @param {DbRecordFile} record
+     */
+    setFile(e,record){
       let me = this;
-      for(let f of e.target.files){
-        let task=this.$db.getFileRecord(f);
-        task.on("RESULT",
-          /**
-           *
-           * @param {DbRecordFile} result
-           */
-          function(result){
-            console.log("result",result)
-            me.field.uid=result.uid;
-          }
-        );
+      if(record){
+        me.field.uid=record.uid;
       }
     },
     customFilter (item, queryText) {

@@ -15,7 +15,7 @@
             text="fichier"
             record-type="file"
             file-accept="video/*"
-            @add-record-file="addFile($event)"
+            @set-record-file="setFile"
         />
     </template>
   </v-text-field>
@@ -90,20 +90,15 @@ export default {
     }
   },
   methods:{
-    addFile(e){
+    /**
+     *
+     * @param {event} e
+     * @param {DbRecordFile} record
+     */
+    setFile(e,record){
       let me = this;
-      for(let f of e.target.files){
-        let task=this.$db.getFileRecord(f);
-        task.on("RESULT",
-          /**
-           *
-           * @param {DbRecordFile} result
-           */
-          function(result){
-            console.log("result",result)
-            me.field.userInput=result.dbUidString;
-          }
-        );
+      if(record){
+        me.field.userInput=record.dbUidString;
       }
     }
   },
