@@ -4,13 +4,28 @@ import TranslatedField from "./TranslatedField";
 import ImageFactoryUrlNode from "../images/ImageFactoryUrlNode";
 
 export default class ImageField extends RecordField{
-    constructor() {
+    /**
+     *
+     * @param {ImageFactoryUrl[]} resizes Permet de générer les miniatures aux formats fournis quand le champ est défini
+     */
+    constructor(resizes=[]) {
         super();
         /**
          * Description de l'image en plusieurs langues
          * @type {TranslatedField}
          */
         this.alt=new TranslatedField();
+
+        let me=this;
+        this._resizePreCaches=function(){
+            console.log("_resizePreCaches")
+            if(this.record.isImage){
+                for(let conf of resizes){
+                    conf.source=me.record.hrefLocal;
+                    conf.toString();
+                }
+            }
+        }
     }
 
     /**
@@ -23,6 +38,7 @@ export default class ImageField extends RecordField{
     set record(record){
         if(this.record && this.record.isImage){
             this.uid=record.uid;
+            this._resizePreCaches();
         }else{
             this.uid="";
         }
@@ -49,5 +65,7 @@ export default class ImageField extends RecordField{
         //TODO web ici il faudra probablement insérer un appel à ImageFactory normal
         return new ImageFactoryUrlNode(this.record.hrefLocal);
     }
+
+
 
 }
