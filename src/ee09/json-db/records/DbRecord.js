@@ -1,12 +1,20 @@
 const merge=require('lodash/merge');
+import DateField from "../fields/DateField";
 export default class DbRecord{
     constructor() {
         this.type="dbRecord";
         this.uid=null;
         this.name="";
-        this.dateCreated=new Date().toISOString();
-        this.dateModified=new Date().toISOString();
-
+        /**
+         * Date de création du record
+         * @type {DateField}
+         */
+        this.dateCreated=new DateField();
+        /**
+         * Date de la dernière modification du record
+         * @type {DateField}
+         */
+        this.dateModified=new DateField();
     }
 
 
@@ -51,7 +59,7 @@ export default class DbRecord{
      */
     update(){
         this._setUid();
-        this.dateModified=new Date().toISOString();
+        this.dateModified.date=new Date();
     }
 
     /**
