@@ -88,7 +88,7 @@ export default {
     setFile(e,record){
       let me = this;
       if(record){
-        me.field.uid=record.uid;
+        me.field.record=record;
       }
     },
     customFilter (item, queryText) {
