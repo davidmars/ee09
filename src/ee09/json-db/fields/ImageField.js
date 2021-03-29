@@ -36,7 +36,7 @@ export default class ImageField extends RecordField{
         return super.record;
     }
     set record(record){
-        if(this.record && this.record.isImage){
+        if(record && record.isImage){
             this.uid=record.uid;
             this._resizePreCaches();
         }else{
