@@ -1,6 +1,6 @@
 {
   "name": "ee09",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "David Marsalone / Pixel Vinaigrette",
   "description": "Une boite à outils pour faire du Javascript dans un navigateur, avec ou sans Vue, avec ou sans Electron",
   "private": true,
