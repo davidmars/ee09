@@ -12,6 +12,13 @@ export default class ImageFactoryUrl {
         this._quality= 80;
         this._format= "jpg";
     }
+    /**
+     * Renvoie l'url permettant de charger l'image modifiée
+     * @return {string}
+     */
+    href(){
+        return this.toString();
+    }
 
     bg(hexColor="FF0000"){
         hexColor=hexColor.replace("#",'');
