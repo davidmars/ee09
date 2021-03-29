@@ -1,6 +1,6 @@
 import ImageFactoryUrl from "./ImageFactoryUrl";
-import sharp from "sharp";
-
+//import sharp from "sharp";
+const sharp = require('sharp');
 /**
  * Permet de générer des miniatures qui sont mises en cache
  * Ce module ne fonctionne qu'avec node
