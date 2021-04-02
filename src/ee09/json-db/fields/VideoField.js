@@ -35,6 +35,8 @@ export default class VideoField{
                 return "mdi-play-network";
             case "file":
                 return "mdi-file-video";
+            case "iframe":
+                return "mdi-iframe";
             default:
                 return "mdi-alert"
         }
@@ -117,9 +119,16 @@ export default class VideoField{
                 this.videoId=extract.id;
             }
         }else{
-            if(window.$db.utils.url.isValid(input)){
-                this.provider="http";
-                this.videoId=input;
+            switch (true){
+                case window.$db.utils.url.isValid(input):
+                    this.provider="http";
+                    this.videoId=input;
+                    break;
+                case String(input).indexOf('<iframe') > -1:
+                    this.provider="iframe";
+                    this.videoId=input;
+                    break;
+
             }
         }
     }
