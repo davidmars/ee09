@@ -71,6 +71,7 @@ export default class EE09fileUtilsBrowser {
      * Renvoie l'extension
      * @param {String|File} file Un objet file ou un nom de fichier ou une url de fichier
      * @param {boolean} dot si true renvoie l'extension avec un point devant
+     * @return {String}
      */
     ext(file,dot=false){
         if(!file){

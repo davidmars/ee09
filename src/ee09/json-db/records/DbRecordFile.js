@@ -42,6 +42,14 @@ export default class DbRecordFile extends DbRecord{
     }
 
     /**
+     * Renvoie l'extension (sans point)
+     * @return {string}
+     */
+    get extension(){
+        return window.$db.utils.file.ext(this.path);
+    }
+
+    /**
      * Calcule les dimensions de l'image (si s'en est une)
      * @private
      */
@@ -106,7 +114,7 @@ export default class DbRecordFile extends DbRecord{
     get adminSubtitle(){
         let r= window.$db.utils.file.humanSize(this.byteSize)+" "+this.mime;
         if(this.isImage){
-            r+=` ${this.width} x ${this.height} px`
+            r+=` ${this.width}x${this.height}px`
         }
         return r;
     }
