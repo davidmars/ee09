@@ -1,5 +1,5 @@
 /**
- * Un objet qui contient une valeur par langue configurée dans $db
+ * Un champ qui contient une valeur par langue configurée dans $db
  */
 export default class TranslatedField{
     constructor() {
@@ -7,14 +7,16 @@ export default class TranslatedField{
             this[lang.code]="";
         }
     }
-
     /**
      * Renvoie la valeur pour une langue donnée
-     * @param {String} langCode
+     * @param {String|DbLanguage} language
      * @return {String}
      */
-    getValue(langCode){
-        return this[langCode];
+    getValue(language){
+        if(window.$db.utils.is.anObject(language)){
+            language=language.code;
+        }
+        return this[language];
     }
 
     /**
