@@ -1,6 +1,7 @@
 import JsonDb from "./JsonDb";
 import EE09task from "../EE09task";
 import EE09fileUtilsNode from "../utils/EE09fileUtilsNode";
+import EE09imageUtilsNode from "../utils/EE09imageUtilsNode";
 const { JSONStorage } = require('node-localstorage');
 const fs = require("fs");
 const {dialog} = require('electron').remote;
@@ -22,6 +23,7 @@ export default class JsonDbNode extends JsonDb{
             this._createDefaultDb();
         }
         this.utils.fileNode=new EE09fileUtilsNode();
+        this.utils.image=new EE09imageUtilsNode();
 
     }
 
@@ -119,7 +121,6 @@ export default class JsonDbNode extends JsonDb{
             console.error(err)
         })
     }
-
 
     /**
      * Copie un fichier physique, le résultat de la tâche est le chemin vers le fichier copié

@@ -7,6 +7,7 @@ import EE09dateUtils from "../utils/EE09dateUtils";
 import EE09urlAnalyzer from "../utils/EE09urlAnalyzer";
 import EE09obj from "../utils/EE09obj";
 import EE09string from "../utils/EE09string";
+import EE09is from "../utils/EE09is";
 const fileUtils=new EE09fileUtilsBrowser();
 const EventEmitter = require('event-emitter-es6');
 
@@ -46,6 +47,11 @@ export default class JsonDb extends EventEmitter{
             url:new EE09urlAnalyzer(),
             obj:new EE09obj(),
             string:new EE09string(),
+            is:new EE09is(),
+            /**
+             * @type {EE09imageUtilsNode|null}
+             */
+            image:null
         }
         /**
          * Quand définit sur true les enregistrements en BDD sont impossibles
@@ -262,7 +268,15 @@ export default class JsonDb extends EventEmitter{
      * @return {DbRecordFile[]}
      */
     get recordListImages(){
-        return this.records.filter(item=>item.type==='file' && item.isImage);
+        return this.recordListFiles.filter(item=> item.isImage);
+    }
+
+    /**
+     * Renvoie les records qui sont des fichiers
+     * @return {DbRecordFile[]}
+     */
+    get recordListFiles(){
+        return this.records.filter(item=>item.type==='file');
     }
 
 
