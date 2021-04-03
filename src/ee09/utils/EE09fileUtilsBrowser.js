@@ -101,7 +101,7 @@ export default class EE09fileUtilsBrowser {
         let mimeIcon="mdiFileDocumentOutline";
         if(!mime && !extension){
             console.warn("appel à mimeToMdiIcon vide !");
-            return "mdiFileQuestionOutline";
+            return "mdi-file-question-outline";
         }
 
         switch (true) {
@@ -152,6 +152,11 @@ export default class EE09fileUtilsBrowser {
             case mime.match("x-tar")!==null:
                 mimeIcon="mdiFolderZipOutline";
                 break;
+
+            case ["srt","vtt","sub"].indexOf(extension)>-1:
+            case mime.match("text:vtt")!==null:
+                mimeIcon="mdiCommentTextOutline";
+                break;
         }
         return kebabCase(mimeIcon);
     }
@@ -189,6 +194,35 @@ export default class EE09fileUtilsBrowser {
      */
     regularSlashes(path){
         return path.replace(/\\/g, "/");
+    }
+
+    /**
+     * Teste si le mime type ou l'extension fournies passent le test
+     * @param {string} accept une chaine d'acceptation identique à l'attribut input file html
+     * @param {string} mime Mime type à tester
+     * @param {string} extension Extension à tester (avec ou sans point)
+     * @return {boolean}
+     */
+    validateFileFormat(accept,mime,extension) {
+        if(extension){
+            extension="."+extension.replace(".","");
+        }
+        accept=accept.replace(/\s/g, '');
+        let acceptArray=accept.split(',');
+        let mimeOk=false;
+        let extOk=false;
+
+        if(mime){
+            mimeOk=acceptArray.filter(acceptable => {
+                return new RegExp(acceptable.replace('*', '.*')).test(mime);
+            }).length > 0;
+        }
+        if(extension){
+            extOk=acceptArray.filter(acceptable => {
+                return new RegExp(acceptable.replace('*', '.*')).test(extension);
+            }).length > 0;
+        }
+        return mimeOk || extOk;
     }
 
 
