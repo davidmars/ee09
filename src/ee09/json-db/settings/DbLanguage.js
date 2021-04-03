@@ -22,6 +22,7 @@ export default class DbLanguage{
 
     /**
      * Renvoie true si la langue est la langue courrante
+     * La variable current est définie dans $db.settings.currentLanguage
      * @return {boolean}
      */
     get isCurrent(){
