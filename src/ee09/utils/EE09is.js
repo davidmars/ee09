@@ -32,7 +32,7 @@ export default class EE09is{
      * @param {*} value
      * @return {boolean}
      */
-    aUndefined(value){
+    anUndefined(value){
         return typeof value==="undefined";
     }
     /**
@@ -40,7 +40,7 @@ export default class EE09is{
      * @param {*} value
      * @return {boolean}
      */
-    aObject(value){
+    anObject(value){
         return typeof value==="object";
     }
 }
