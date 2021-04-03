@@ -4,11 +4,64 @@ export default class DbRecordFile extends DbRecord{
     constructor() {
         super();
         this.type="file";
+        /**
+         * Clé de hashage
+         * @type {string}
+         */
         this.md5="";
+        /**
+         * Chemin du fichier
+         * @type {string}
+         */
         this.path="";
+        /**
+         * Mime type du fichier
+         * @type {string}
+         */
         this.mime=""
+        /**
+         * Poids du fichiers en bytes
+         * @type {number}
+         */
         this.byteSize=0;
+        /**
+         * Largeur si il s'agit d'une image
+         * @readonly
+         * @type {number}
+         */
+        this.width=0;
+        /**
+         * Hauteur si il s'agit d'une image
+         * @readonly
+         * @type {number}
+         */
+        this.height=0;
+
+
+
     }
+
+    /**
+     * Calcule les dimensions de l'image (si s'en est une)
+     * @private
+     */
+    _processData(){
+        super._processData();
+        let me=this;
+        if(this.isImage && window.$db.utils.image){
+            if(this.width===0){
+                window.$db.utils.image.getSize(this.hrefLocal,
+                    function(w,h){
+                        me.width=w;
+                        me.height=h;
+                    }
+                );
+            }
+        }
+    }
+
+
+
 
     /**
      * Renvoie le chemin permettant de charger le fichier (ou une chaine vide)
@@ -51,7 +104,11 @@ export default class DbRecordFile extends DbRecord{
      * @return {string}
      */
     get adminSubtitle(){
-        return window.$db.utils.file.humanSize(this.byteSize)+" "+this.mime;
+        let r= window.$db.utils.file.humanSize(this.byteSize)+" "+this.mime;
+        if(this.isImage){
+            r+=` ${this.width} x ${this.height} px`
+        }
+        return r;
     }
 
     /**
@@ -69,7 +126,10 @@ export default class DbRecordFile extends DbRecord{
     get adminThumb(){
         if(this.isImage){
             //TODO WEB gérer version alternative
-            return new ImageFactoryUrlNode(this.hrefLocal).inside(200,200).jpg().toString();
+            return new ImageFactoryUrlNode(this.hrefLocal)
+                .inside(200,200)
+                .jpg()
+                .toString();
         }
         return null;
     }

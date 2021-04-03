@@ -17,6 +17,14 @@ export default class DbRecord{
         this.dateModified=new DateField();
     }
 
+    /**
+     * Méthode exécutée juste après que le record soit chargé
+     * @private
+     */
+    _processData(){
+
+    }
+
 
 
     /**
@@ -51,6 +59,7 @@ export default class DbRecord{
             merge(this,data);
             //Object.assign(this, data);
             //this._setUid();
+            this._processData();
         }
     }
 
