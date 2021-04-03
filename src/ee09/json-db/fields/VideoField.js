@@ -1,3 +1,4 @@
+import TranslatedFilesField from "./TranslatedFilesField";
 
 
 export default class VideoField{
@@ -19,6 +20,12 @@ export default class VideoField{
          * @type {string}
          */
         this.videoId="";
+        /**
+         * Un jeu de fichier par langues
+         * @type {TranslatedFilesField}
+         */
+        this.subtitles=new TranslatedFilesField();
+
     }
 
     /**
