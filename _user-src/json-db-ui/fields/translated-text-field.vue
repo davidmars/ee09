@@ -8,7 +8,7 @@
               required
               filled
             >
-              <template v-slot:append>
+              <template v-slot:prepend-inner>
                 <v-img :src="lang.flagImg" width="24" height="24" contain/>
               </template>
             </v-text-field>

@@ -19,11 +19,15 @@
         />
     </template>
   </v-text-field>
-
   <video-plyr
       v-if="field.getErrors().length===0"
       :options="plyrOptions"
       :source="field.getPlyrSource()"
+  />
+  <translated-files-field
+      label="Sous titres"
+      :field="field.subtitles"
+      file-accept=".vtt"
   />
 
 
@@ -55,9 +59,11 @@
 import FieldLabel from "./field-label";
 import VideoPlyr from "ee09/src/ee09/vue/video-plyr";
 import RecordCreateBtn from "../records/record-create-btn";
+import TranslatedFilesField from "@/ee09/json-db-ui/fields/translated-files-field";
 export default {
   name: "field-video",
   components: {
+    TranslatedFilesField,
     RecordCreateBtn,
     VideoPlyr,
     FieldLabel,

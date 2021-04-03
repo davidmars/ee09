@@ -5,7 +5,7 @@
                       contain
                       :src="record.adminThumb"/>
         <record-icon  v-else
-                      :record="record"></record-icon>
+                      :record="record"/>
       </v-list-item-avatar>
       <v-list-item-content>
           <v-list-item-title>{{record.name}}</v-list-item-title>

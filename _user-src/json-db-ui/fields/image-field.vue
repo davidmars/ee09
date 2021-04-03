@@ -1,17 +1,22 @@
 <template>
-<div class="image-field mb-6">
-
+<div class="image-field">
+  <field-label v-if="label">{{label}}</field-label>
   <v-autocomplete
       v-model="f.record"
       :items="$db.recordListImages"
       :filter="customFilter"
       filled
-      :label="label"
       item-text="name"
       return-object
       hide-details
   >
+    <template v-slot:prepend-inner>
+      <!-- permet par exemple de placer un drapeau ;) -->
+      <slot name="prepend"></slot>
+    </template>
+
     <template v-slot:append>
+      <slot name="action"></slot>
       <div @mousedown.stop="">
         <record-create-btn
             small
@@ -25,6 +30,12 @@
       </div>
 
     </template>
+
+    <!-- le record sélectionné -->
+    <template v-slot:selection="data">
+      <record-list-item :record="data.item" class="ml-n3"/>
+    </template>
+
     <!-- Liste des images -->
     <template v-slot:item="data">
 
@@ -47,9 +58,9 @@
 
   <v-row>
     <v-col v-if="f.href" cols="12">
-      <v-sheet color="grey" class="pa-5">
-        <v-img max-height="600" contain :src="f.href"></v-img>
-      </v-sheet>
+      <div class="pa-5 ee09-bg-grid-photoshop">
+        <v-img max-height="600" contain :src="f.resize().inside(800,800).bg('00ff0088').webp().href()"></v-img>
+      </div>
     </v-col>
   </v-row>
 
@@ -59,9 +70,14 @@
 
 <script>
 import RecordCreateBtn from "../records/record-create-btn";
+import RecordListItem from "@/ee09/json-db-ui/records/record-list-item";
+import FieldLabel from "@/ee09/json-db-ui/fields/field-label";
+require("ee09/src/ee09/css/ee09-bg-grid.less")
 export default {
   name: "image-field",
   components: {
+    FieldLabel,
+    RecordListItem,
     //RecordListItemInner,
     RecordCreateBtn,
   },
