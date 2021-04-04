@@ -38,28 +38,33 @@
 
     <!-- Liste des images -->
     <template v-slot:item="data">
-
-      <v-list-item-avatar color="grey lighten-3" tile >
-        <v-img contain
-               :src="data.item.adminThumb"/>
-      </v-list-item-avatar>
-      <v-list-item-content>
-        <v-list-item-title>{{data.item.name}}</v-list-item-title>
-        <v-list-item-action-text>
-          <v-icon small v-if="data.item.adminSubtitleIcon">
-            {{data.item.adminSubtitleIcon}}
-          </v-icon>
-          {{data.item.adminSubtitle}}
-        </v-list-item-action-text>
-      </v-list-item-content>
-
+      <record-list-item-avatar :record="data.item"/>
+      <record-list-item-content :record="data.item"/>
+      <record-list-item-action :record="data.item"/>
     </template>
+
   </v-autocomplete>
 
   <v-row>
     <v-col v-if="f.href" cols="12">
       <div class="pa-5 ee09-bg-grid-photoshop">
-        <v-img max-height="600" contain :src="f.resize().inside(800,800).bg('00ff0088').webp().href()"></v-img>
+        <v-img max-height="600" contain
+               :lazy-src="f.resize().inside(800,800).bg('00ff0088').webp().href()"
+               :src="f.resize().inside(800,800).bg('00ff0088').webp().href()"
+               >
+          <template v-slot:placeholder>
+            <v-row
+                class="fill-height ma-0"
+                align="center"
+                justify="center"
+            >
+              <v-progress-circular
+                  indeterminate
+                  color="grey lighten-5"
+              ></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
       </div>
     </v-col>
   </v-row>
@@ -72,10 +77,16 @@
 import RecordCreateBtn from "../records/record-create-btn";
 import RecordListItem from "@/ee09/json-db-ui/records/record-list-item";
 import FieldLabel from "@/ee09/json-db-ui/fields/field-label";
+import RecordListItemAction from "@/ee09/json-db-ui/records/list-item/record-list-item-action";
+import RecordListItemContent from "@/ee09/json-db-ui/records/list-item/record-list-item-content";
+import RecordListItemAvatar from "@/ee09/json-db-ui/records/list-item/record-list-item-avatar";
 require("ee09/src/ee09/css/ee09-bg-grid.less")
 export default {
   name: "image-field",
   components: {
+    RecordListItemAvatar,
+    RecordListItemContent,
+    RecordListItemAction,
     FieldLabel,
     RecordListItem,
     //RecordListItemInner,

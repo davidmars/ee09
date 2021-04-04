@@ -37,24 +37,11 @@
 
     <!-- Liste des fichiers -->
     <template v-slot:item="data">
-      <v-list-item-avatar color="grey lighten-3" tile >
-        <v-img        v-if="data.item.adminThumb"
-                      contain
-                      :src="data.item.adminThumb"/>
-        <record-icon  v-else
-                      :record="data.item"/>
-      </v-list-item-avatar>
-      <v-list-item-content>
-        <v-list-item-title>{{data.item.name}}</v-list-item-title>
-        <v-list-item-action-text>
-          <v-icon small v-if="data.item.adminSubtitleIcon">
-            {{data.item.adminSubtitleIcon}}
-          </v-icon>
-          {{data.item.adminSubtitle}}
-        </v-list-item-action-text>
-      </v-list-item-content>
-
+      <record-list-item-avatar :record="data.item"/>
+      <record-list-item-content :record="data.item"/>
+      <record-list-item-action :record="data.item"/>
     </template>
+
   </v-autocomplete>
 
 </div>
@@ -62,15 +49,19 @@
 
 <script>
 import RecordCreateBtn from "../records/record-create-btn";
-import RecordIcon from "@/ee09/json-db-ui/records/record-icon";
 import RecordListItem from "@/ee09/json-db-ui/records/record-list-item";
 import FieldLabel from "@/ee09/json-db-ui/fields/field-label";
+import RecordListItemAvatar from "@/ee09/json-db-ui/records/list-item/record-list-item-avatar";
+import RecordListItemContent from "@/ee09/json-db-ui/records/list-item/record-list-item-content";
+import RecordListItemAction from "@/ee09/json-db-ui/records/list-item/record-list-item-action";
 export default {
   name: "file-field",
   components: {
+    RecordListItemAction,
+    RecordListItemContent,
+    RecordListItemAvatar,
     FieldLabel,
     RecordListItem,
-    RecordIcon,
     RecordCreateBtn,
   },
   props:{
