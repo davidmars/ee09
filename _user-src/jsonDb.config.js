@@ -5,7 +5,7 @@ import Vue from "vue";
 //import VideoEdit from "@/models/video-edit";
 
 import JsonDbNode from "ee09/src/ee09/json-db/JsonDbNode";
-import DbUiElectron from "@/ee09/json-db-ui/DbUiElectron";
+import DbUiElectron from "./json-db-ui/DbUiElectron";
 
 
 
