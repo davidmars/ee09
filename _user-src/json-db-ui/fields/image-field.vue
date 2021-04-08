@@ -47,25 +47,9 @@
 
   <v-row>
     <v-col v-if="f.href" cols="12">
-      <div class="pa-5 ee09-bg-grid-photoshop">
-        <v-img max-height="600" contain
-               :lazy-src="f.resize().inside(800,800).bg('00ff0088').webp().href()"
-               :src="f.resize().inside(800,800).bg('00ff0088').webp().href()"
-               >
-          <template v-slot:placeholder>
-            <v-row
-                class="fill-height ma-0"
-                align="center"
-                justify="center"
-            >
-              <v-progress-circular
-                  indeterminate
-                  color="grey lighten-5"
-              ></v-progress-circular>
-            </v-row>
-          </template>
-        </v-img>
-      </div>
+      <file-image-visualizer
+          :src="f.resize().thumbnail(1024)"
+      />
     </v-col>
   </v-row>
 
@@ -75,15 +59,17 @@
 
 <script>
 import RecordCreateBtn from "../records/record-create-btn";
-import RecordListItem from "@/ee09/json-db-ui/records/record-list-item";
-import FieldLabel from "@/ee09/json-db-ui/fields/field-label";
-import RecordListItemAction from "@/ee09/json-db-ui/records/list-item/record-list-item-action";
-import RecordListItemContent from "@/ee09/json-db-ui/records/list-item/record-list-item-content";
-import RecordListItemAvatar from "@/ee09/json-db-ui/records/list-item/record-list-item-avatar";
-require("ee09/src/ee09/css/ee09-bg-grid.less")
+import RecordListItem from "../records/record-list-item";
+import FieldLabel from "../fields/field-label";
+import RecordListItemAction from "../records/list-item/record-list-item-action";
+import RecordListItemContent from "../records/list-item/record-list-item-content";
+import RecordListItemAvatar from "../records/list-item/record-list-item-avatar";
+import FileImageVisualizer from "../components/file-image-visualizer";
+
 export default {
   name: "image-field",
   components: {
+    FileImageVisualizer,
     RecordListItemAvatar,
     RecordListItemContent,
     RecordListItemAction,

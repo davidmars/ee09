@@ -48,9 +48,9 @@
       </v-col>
       <!-- preview image -->
       <v-col v-if="recordObject.isImage" cols="12">
-        <v-sheet color="grey" class="pa-5">
-          <v-img contain :src="recordObject.href"></v-img>
-        </v-sheet>
+        <file-image-visualizer
+            :src="recordObject.resize.thumbnail(1024)"
+        />
       </v-col>
     </v-row>
 
@@ -71,9 +71,10 @@ import FieldMimeType from "../fields/field-mime-type";
 
 import VideoPlyr from "ee09/src/ee09/vue/video-plyr";
 import CodePreview from "../code-preview";
+import FileImageVisualizer from "@/ee09/json-db-ui/components/file-image-visualizer";
 export default {
   name: "file-edit",
-  components: {CodePreview, VideoPlyr, FieldMimeType, FieldBytes},
+  components: {FileImageVisualizer, CodePreview, VideoPlyr, FieldMimeType, FieldBytes},
   data(){
     return {
       videoSource:{
