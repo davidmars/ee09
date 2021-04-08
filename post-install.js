@@ -11,8 +11,7 @@
 const gentlyCopy = require('gently-copy');
 
 let filesToCopy = [
-    '_user-src/json-db-ui',
-    '_user-src/jsonDb.config.js'
+    '_user-src'
 ]
 
 // User's local directory
