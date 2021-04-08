@@ -6,9 +6,9 @@ import ImageFactoryUrlNode from "../images/ImageFactoryUrlNode";
 export default class ImageField extends RecordField{
     /**
      *
-     * @param {ImageFactoryUrl[]} resizes Permet de générer les miniatures aux formats fournis quand le champ est défini
+     * @param {{}<ImageFactoryUrlNode>} resizes Permet de générer les miniatures aux formats fournis quand le champ est défini
      */
-    constructor(resizes=[]) {
+    constructor(resizes={}) {
         super();
         /**
          * Description de l'image en plusieurs langues
@@ -17,16 +17,46 @@ export default class ImageField extends RecordField{
         this.alt=new TranslatedField();
 
         let me=this;
+
+
+
+        //note: ces méthodes sont définies ici afin de ne pas enregistrer les presets de resize dans le json de la BDD
+
+        /**
+         * Renvoie l'url d'une image resize à partir de la clé définie dans le constructeur
+         * @param {string} resizePresetName
+         * @return {String}
+         * @private
+         */
+        this._resizeByPreset=function(resizePresetName){
+            let im=resizes[resizePresetName];
+            im.source=me.record.href;
+            return im.href();
+        }
+        /**
+         * Met en cache les presets resize définis dans le constructeur
+         * @private
+         */
         this._resizePreCaches=function(){
-            console.log("_resizePreCaches")
-            if(this.record.isImage){
-                for(let conf of resizes){
-                    conf.source=me.record.hrefLocal;
-                    conf.toString();
-                }
+            if(this.record && this.record.isImage){
+                console.log("loop _resizePreCaches")
+                Object.entries(resizes).forEach(([resizePresetName,value])=>{
+                    console.log("_resizePreCaches",resizePresetName,value)
+                    me._resizeByPreset(resizePresetName);
+                })
             }
         }
+
     }
+
+    /**
+     * Méthode appelée une fois que le champ est monté ou modifié
+     * @private
+     */
+    _processData(){
+        this._resizePreCaches();
+    }
+
 
     /**
      * Renvoie le record file relatif
@@ -38,7 +68,7 @@ export default class ImageField extends RecordField{
     set record(record){
         if(record && record.isImage){
             this.uid=record.uid;
-            this._resizePreCaches();
+            this._processData();
         }else{
             this.uid="";
         }
@@ -61,10 +91,15 @@ export default class ImageField extends RecordField{
      * Permet d'obtenir une image recadrée
      * @return {ImageFactoryUrlNode}
      */
-    resize(){
-        //TODO web ici il faudra probablement insérer un appel à ImageFactory normal
-        return new ImageFactoryUrlNode(this.record.hrefLocal);
+    resize(presetName=null){
+        if(presetName){
+            return this._resizeByPreset(presetName);
+        }else{
+            //TODO web ici il faudra probablement insérer un appel à ImageFactory normal
+            return new ImageFactoryUrlNode(this.record.hrefLocal);
+        }
     }
+
 
 
 

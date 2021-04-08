@@ -1,5 +1,4 @@
 import ImageFactoryUrl from "./ImageFactoryUrl";
-//import sharp from "sharp";
 const sharp = require('sharp');
 /**
  * Permet de générer des miniatures qui sont mises en cache
@@ -8,21 +7,48 @@ const sharp = require('sharp');
 export default class ImageFactoryUrlNode extends ImageFactoryUrl{
     constructor(source) {
         super(source);
-        this.ready=false;
-    }
-    toString() {
-        let url = super.toString();
-        let utils=window.$db.utils.fileNode;
-        //si le fichier n'existe pas déjà
-        if(!utils.existsFile(url)){
-            this._generateImage(url);
-        }else{
-            this.ready=true;
-        }
-        return url;
     }
 
+    /**
+     * Renvoie l'url pour charger l'image dans le navigateur.
+     * Génèrera l'image si ce n'est pas déjà fait
+     * @return {string}
+     */
+    href(){
+        if(this.testExists()){
+            this.ready=true;
+        }else{
+            this._generateImage(this._localPath());
+        }
+        return super.href();
+    }
+    /**
+     * Renvoie true si le fichier final existe
+     * Met en cache les positifs pour un process plus rapide
+     * @return {boolean}
+     */
+    testExists(useCache=true){
+        let path=this._localPath();
+        if(useCache && ImageFactoryUrlNode._cache.fileExists[path]){
+            return true;
+        }
+        let exist= window.$db.utils.fileNode.existsFile(path);
+        if(exist){
+            ImageFactoryUrlNode._cache.fileExists[path]=true;
+        }
+        return exist;
+    }
+
+    /**
+     * Génère réellement l'image, crée les répertoires etc...
+     * @param destImagePath
+     * @private
+     */
     _generateImage(destImagePath){
+        /**
+         *
+         * @type {ImageFactoryUrlNode}
+         */
         let me=this;
         let utils=window.$db.utils.fileNode;
         //crée le répertoire
@@ -51,16 +77,27 @@ export default class ImageFactoryUrlNode extends ImageFactoryUrl{
                     break;
             }
 
-            s.toFile(destImagePath, (err, info) => {
+            s.toFile(destImagePath, (
+                    err
+                    //, info
+                    ) => {
                 if(err){
                     console.error("ImageFactoryUrlNode error",err);
                 }else{
-                    me.ready=true;
-                    console.log("ImageFactoryUrlNode success",info);
+                    setTimeout(function(){
+                        ImageFactoryUrlNode._cache.fileExists[destImagePath]=true;
+                        me.ready=true;
+                    },100)
+
+
                 }
             });
         }
     }
 
 
+}
+
+ImageFactoryUrlNode._cache={
+    fileExists:{}
 }

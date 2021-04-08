@@ -37,8 +37,18 @@ export default class DbRecordFile extends DbRecord{
          */
         this.height=0;
 
+    }
 
-
+    /**
+     *
+     * @return {null|ImageFactoryUrlNode}
+     */
+    get resize(){
+        if(this.isImage){
+            //TODO WEB gérer version alternative
+            return new ImageFactoryUrlNode(this.hrefLocal)
+        }
+        return null;
     }
 
     /**
@@ -50,12 +60,15 @@ export default class DbRecordFile extends DbRecord{
     }
 
     /**
-     * Calcule les dimensions de l'image (si s'en est une)
+     * Si c'est une image:
+     * - Calcule les dimensions de l'image
+     * - génère une image 32, 256 et 1024 pour de futures utilisations
      * @private
      */
     _processData(){
         super._processData();
         let me=this;
+        //si c'est une image, on fait des mises en cache
         if(this.isImage && window.$db.utils.image){
             if(this.width===0){
                 window.$db.utils.image.getSize(this.hrefLocal,
@@ -65,6 +78,10 @@ export default class DbRecordFile extends DbRecord{
                     }
                 );
             }
+            this.resize.thumbnail(32);
+            this.resize.thumbnail(256);
+            this.resize.thumbnail(1024);
+
         }
     }
 
@@ -134,10 +151,7 @@ export default class DbRecordFile extends DbRecord{
     get adminThumb(){
         if(this.isImage){
             //TODO WEB gérer version alternative
-            return new ImageFactoryUrlNode(this.hrefLocal)
-                .inside(200,200)
-                .jpg()
-                .toString();
+            return this.resize.thumbnail(32);
         }
         return null;
     }

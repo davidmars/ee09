@@ -1,5 +1,8 @@
-export default class ImageFactoryUrl {
+const EventEmitter = require('event-emitter-es6');
+export default class ImageFactoryUrl extends EventEmitter{
+
     constructor(source) {
+        super();
         this.source=source;
         this._fit="auto";
         this._width=0;
@@ -11,13 +14,38 @@ export default class ImageFactoryUrl {
          */
         this._quality= 80;
         this._format= "jpg";
+        /**
+         * Dit si l'image est prête ou pas
+         * @type {boolean}
+         * @private
+         */
+        this._ready=false;
     }
+
     /**
-     * Renvoie l'url permettant de charger l'image modifiée
+     * Renvoie un webp inside pour les utilisations courantes
+     * @param {Number} size
      * @return {string}
      */
-    href(){
-        return this.toString();
+    thumbnail(size){
+        let s=this.inside(size,size);
+        return s.webp().href();
+    }
+
+
+    get ready() {
+        return this._ready;
+    }
+
+    /**
+     *
+     * @param {boolean} value
+     */
+    set ready(value) {
+        this._ready = value;
+        if(value){
+            this.emit("ready")
+        }
     }
 
     bg(hexColor="FF0000"){
@@ -45,7 +73,7 @@ export default class ImageFactoryUrl {
     }
 
     /**
-     * Redimensionne l'imge de manière à ce qu'elle ne mesure pas plus que les dimensions fournies
+     * Redimensionne l'image de manière à ce qu'elle ne mesure pas plus que les dimensions fournies
      * @param {Number} w
      * @param {Number} h
      * @return {ImageFactoryUrl}
@@ -56,12 +84,26 @@ export default class ImageFactoryUrl {
         this._height=h;
         return this;
     }
+
+    /**
+     * Fonctionne à l'identique d'un cover CSS
+     * @param w
+     * @param h
+     * @return {ImageFactoryUrl}
+     */
     cover(w,h){
         this._fit="cover";
         this._width=w;
         this._height=h;
         return this;
     }
+    /**
+     * Fonctionne à l'identique d'un contain CSS,
+     * l'image aura donc probablement une zone de vide remplie par le background pour compenser les marges
+     * @param w
+     * @param h
+     * @return {ImageFactoryUrl}
+     */
     contain(w,h){
         this._fit="contain";
         this._width=w;
@@ -89,11 +131,21 @@ export default class ImageFactoryUrl {
         this._format="webp";
         return this;
     }
+    /**
+     * Le fichier de sortie sera un png
+     * @return {ImageFactoryUrl}
+     */
     png(){
         this._format="png";
         return this;
     }
-    toString(){
+
+    /**
+     * Ne fait que renvoyer le path local en fonction des paramètres, rien de plus
+     * @private
+     * @return {string}
+     */
+    _localPath(){
         let base=this.source;
         base=window.$db.utils.file.regularSlashes(base);
         base=base.replace("/fs/","/fs-cache/im/");
@@ -110,5 +162,13 @@ export default class ImageFactoryUrl {
         return `${base}/${info}.${extension}`;
     }
 
+
+    /**
+     * Renvoie l'url permettant de charger l'image modifiée
+     * @return {string}
+     */
+    href(){
+        return `${this._localPath()}`;
+    }
 
 }
