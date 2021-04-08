@@ -1,6 +1,10 @@
 import TranslatedFilesField from "./TranslatedFilesField";
 
-
+/**
+ * Le vidéo field est un objet haut niveau permettant de gérer un média vidéo et ses différents aspects.
+ * Le champ vidéo peut supporter des vidéos locale, des vidéos youtube, vimeo et des flux http
+ * D'autre part le champ vidéo dispose de la possibilité d'ajouter des sous titres pour chaque langue.
+ */
 export default class VideoField{
 
     constructor() {
@@ -29,7 +33,7 @@ export default class VideoField{
     }
 
     /**
-     * Renvoie une icone mdi en fonction du provider
+     * Renvoie une icône mdi en fonction du provider
      * @return {string}
      */
     get providerMdiIcon(){
@@ -75,7 +79,8 @@ export default class VideoField{
                 {
                     src:""
                 }
-            ]
+            ],
+            tracks:[]
         }
         /**
          *
@@ -99,6 +104,23 @@ export default class VideoField{
             //r.sources[0].type="video/webm";
 
         }
+
+        for(let lang of window.$db.settings.languages){
+            let file=this.subtitles.getValue(lang);
+            if(file && file.byteSize>0){
+                r.tracks.push({
+                    kind:'captions',
+                    label:lang.label,
+                    srclang:lang.code,
+                    //src:"https://cdn.plyr.io/static/demo/thumbs/100p.vtt",
+                    src:file.href,
+                    default:lang.isCurrent
+                })
+            }
+        }
+
+
+
         return r;
     }
     get userInput() {

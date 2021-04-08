@@ -23,6 +23,7 @@
       v-if="field.getErrors().length===0"
       :options="plyrOptions"
       :source="field.getPlyrSource()"
+      :language="$db.settings.currentLanguage.code"
   />
   <translated-files-field
       label="Sous titres"
@@ -90,7 +91,14 @@ export default {
           ,'current-time'
           ,'mute'
           ,'volume'
-        ]
+          ,'captions'
+          ,'settings'
+        ],
+        'captions':{
+          active: true,
+          language: window.$db.settings.currentLanguage.code,
+          update: true
+        }
       }
 
     }

@@ -16,16 +16,13 @@ export default {
      * Les options du plyr
      * @see https://github.com/sampotts/plyr#options
      */
-    options:{
-      type:Object
-    },
+    options:{type:Object},
     /**
      * La vidéo à jouer
      * @see https://github.com/sampotts/plyr#the-source-setter
      */
-    source:{
-      type:Object
-    }
+    source:{type:Object},
+    language:{type:String}
   },
   data:function(){
     return {
@@ -59,11 +56,15 @@ export default {
         //console.log("ended",event);
         me.$emit("ended",event)
       })
+      this.player.language=this.language;
     }
   },
   watch:{
     source(){
       this.buildPlayer()
+    },
+    language(){
+      this.player.language=this.language;
     }
   }
 
