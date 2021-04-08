@@ -29,8 +29,8 @@ export default class EE09fileUtilsNode {
         return false;
     }
     /**
-     * Est-ce que ce fichier existe est est bien un fichier?
-     * @param {string} dirPath
+     * Est-ce que ce fichier existe et est bien un fichier?
+     * @param {string} filePath
      * @return {boolean}
      */
     existsFile(filePath){
