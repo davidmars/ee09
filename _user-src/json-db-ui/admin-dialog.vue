@@ -18,15 +18,11 @@
           <div v-if="$dbUi.currentScreen==='single-record'">
             <v-card>
               <v-card-title>
-                <record-list-item
-                    :record="$dbUi.singleRecord"
-                >
+                <record-list-item :record="$dbUi.singleRecord">
                   <template v-slot:action>
                     <btns-record-action :record="$dbUi.singleRecord"/>
                   </template>
                 </record-list-item>
-                <v-spacer/>
-
               </v-card-title>
               <component
                   class="pa-5 mb-5"
