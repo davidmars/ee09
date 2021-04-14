@@ -18,8 +18,15 @@
           <div v-if="$dbUi.currentScreen==='single-record'">
             <v-card>
               <v-card-title>
+                <record-list-item
+                    :record="$dbUi.singleRecord"
+                >
+                  <template v-slot:action>
+                    <btns-record-action :record="$dbUi.singleRecord"/>
+                  </template>
+                </record-list-item>
                 <v-spacer/>
-                <btns-record-action :record="$dbUi.singleRecord"/>
+
               </v-card-title>
               <component
                   class="pa-5 mb-5"
@@ -77,9 +84,10 @@ import JsonDbSettings from "./json-db-settings";
 import AdminDialogNav from "./nav/admin-dialog-nav";
 import RecordTableLine from "./records/record-table-line";
 import BtnsRecordAction from "./records/btns/btns-record-action";
+import RecordListItem from "@/ee09/json-db-ui/records/record-list-item";
 export default {
   name: "admin-dialog",
-  components: {BtnsRecordAction, RecordTableLine, AdminDialogNav, JsonDbSettings},
+  components: {RecordListItem, BtnsRecordAction, RecordTableLine, AdminDialogNav, JsonDbSettings},
   data () {
     return {
       notifications: false,

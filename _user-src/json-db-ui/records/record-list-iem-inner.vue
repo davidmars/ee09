@@ -1,8 +1,16 @@
 <template>
   <fragment @click="$emit('click')">
       <record-list-item-avatar :record="record"/>
-      <record-list-item-content :record="record"/>
-      <record-list-item-action :record="record"/>
+      <record-list-item-content :record="record">
+        <template slot="more">
+          <slot name="more"></slot>
+        </template>
+      </record-list-item-content>
+    <record-list-item-action :record="record">
+      <template slot="action">
+        <slot name="action"></slot>
+      </template>
+    </record-list-item-action>
   </fragment>
 </template>
 
