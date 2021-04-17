@@ -38,8 +38,8 @@ export default class JsonDb extends EventEmitter{
         this._settingsBaseRecords();
 
         /**
-         *
-         * @type {{date: EE09dateUtils, file: EE09fileUtilsBrowser, url: EE09urlAnalyzer}}
+         * Utilitaires
+         * @type {{date: EE09dateUtils, image: (EE09imageUtilsNode|null), file: EE09fileUtilsBrowser, string: EE09string, obj: EE09obj, is: EE09is, url: EE09urlAnalyzer}}
          */
         this.utils={
             file:new EE09fileUtilsBrowser(),
