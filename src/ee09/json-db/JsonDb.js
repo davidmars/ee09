@@ -180,6 +180,7 @@ export default class JsonDb extends EventEmitter{
         this.records = this.records.filter(function(value){
             return value.uid !== record.uid;
         });
+        this.push();
     }
     /**
      * Transforme les records json en objets

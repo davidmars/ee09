@@ -77,6 +77,7 @@ export default class JsonDbNode extends JsonDb{
      * Lit la BDD depuis le disque dur
      */
     pull() {
+        this.records=[];
         this._jsonRecords=this._jsonStorage.getItem(this.JSON_FILE_NAME);
         this._mount(this._jsonRecords);
     }

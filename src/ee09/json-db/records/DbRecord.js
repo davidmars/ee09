@@ -23,9 +23,9 @@ export default class DbRecord{
      */
     _processData(){
         Object.entries(this).forEach(([fieldName,fieldValue])=>{
-            console.log("field",fieldName,fieldValue.constructor.name )
+            //console.log("field",fieldName,fieldValue.constructor.name )
             if(typeof fieldValue._processData === "function"){
-                console.log("go!",fieldName,fieldValue.constructor.name)
+                //console.log("go!",fieldName,fieldValue.constructor.name)
                 fieldValue._processData();
             }
         })

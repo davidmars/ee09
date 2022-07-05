@@ -39,9 +39,9 @@ export default class ImageField extends RecordField{
          */
         this._resizePreCaches=function(){
             if(this.record && this.record.isImage){
-                console.log("loop _resizePreCaches")
+                //console.log("loop _resizePreCaches")
                 Object.entries(resizes).forEach(([resizePresetName,value])=>{
-                    console.log("_resizePreCaches",resizePresetName,value)
+                    //console.log("_resizePreCaches",resizePresetName,value)
                     me._resizeByPreset(resizePresetName);
                 })
             }
